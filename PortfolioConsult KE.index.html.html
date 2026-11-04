@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PortfolioConsult KE</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--primary:#0f766e;--primary2:#14b8a6;--bg:#f1f5f9;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--soft:#f0fdfa;--warn-bg:#fffbeb;--warn-text:#92400e;--shadow:0 10px 40px -10px rgba(0,0,0,.1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--primary:#2dd4bf;--bg:#0b1220;--card:#111a2e;--text:#e5edf8;--muted:#94a3b8;--border:#243049;--soft:#0f2a2e;--warn-bg:#2a2108;--warn-text:#fcd34d;--shadow:none}}
+:root[data-theme="dark"]{color-scheme:dark;--primary:#2dd4bf;--bg:#0b1220;--card:#111a2e;--text:#e5edf8;--muted:#94a3b8;--border:#243049;--soft:#0f2a2e;--warn-bg:#2a2108;--warn-text:#fcd34d;--shadow:none}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.wrap{max-width:560px;margin:0 auto;padding:12px 14px 60px}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.logo{display:flex;align-items:center;gap:10px}
+.logo b{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+h1{font-size:1.2rem}
+.tbtn{border:1.5px solid var(--border);background:var(--card);color:var(--text);border-radius:99px;padding:7px 13px;cursor:pointer;font-size:.8rem}
+.card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:22px 18px;margin-bottom:16px;border:1px solid var(--border)}
+h2{font-size:1.15rem;margin-bottom:2px}
+.desc{color:var(--muted);font-size:.88rem;margin-bottom:18px}
+label,.lv{font-size:.84rem;font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.lv b{color:var(--primary)}
+.hint{font-weight:400;color:var(--muted);font-size:.78rem}
+input[type=number]{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:1rem;margin-bottom:16px;background:var(--card);color:var(--text)}
+input[type=range]{width:100%;margin-bottom:14px;accent-color:var(--primary);height:28px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chips button,.leg button{padding:8px 13px;border-radius:99px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:.85rem;cursor:pointer}
+.chips button.on,.leg button.on{border-color:var(--primary);background:var(--soft);color:var(--primary);font-weight:600}
+.badge{display:inline-block;padding:6px 14px;border-radius:99px;font-weight:700;font-size:.85rem;background:var(--soft);color:var(--primary);margin:6px 0 14px}
+.note{background:var(--warn-bg);color:var(--warn-text);border-radius:12px;padding:11px 13px;font-size:.84rem;margin-bottom:8px}
+h3{font-size:.95rem;margin:22px 0 10px}
+.donutwrap{display:flex;align-items:center;gap:14px}
+#donut{width:150px;flex:none}.seg{cursor:pointer}
+.leg{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.leg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px}
+.box{background:var(--soft);border-radius:12px;padding:13px;font-size:.88rem;margin-top:12px}
+.sub{font-size:.8rem;color:var(--muted);margin-top:6px}
+.disc{font-size:.76rem;color:var(--muted);margin-top:18px;line-height:1.5}
+.btn{display:block;width:100%;padding:13px;border:0;border-radius:14px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:10px}
+.p{background:linear-gradient(135deg,#0f766e,#0d9488);color:#fff}.s{background:var(--border);color:var(--text)}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 16px;border-radius:99px;font-size:.85rem;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.show{opacity:1}
+@media print{.btn,.tbtn{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo"><b>PC</b><h1>PortfolioConsult KE</h1></div><button class="tbtn" id="theme">Light / dark</button></header>
+
+<div class="card">
+  <h2>Your situation</h2>
+  <p class="desc">Change anything and your recommendation updates instantly. Nothing is saved or sent anywhere.</p>
+  <label for="income">Monthly net income (KSh) <span class="hint">after tax</span></label>
+  <input type="number" id="income" data-k="income" inputmode="numeric">
+  <div class="lv">Age <b id="o-age"></b></div><input type="range" data-k="age" min="18" max="75">
+  <div class="lv">Investment horizon <b id="o-horizon"></b></div><input type="range" data-k="horizon" min="1" max="30">
+  <div class="lv">Invest now <b id="o-lump"></b></div><input type="range" data-k="lump" min="0" max="5000000" step="10000">
+  <div class="lv">Add every month <b id="o-monthly"></b></div><input type="range" data-k="monthly" min="0" max="500000" step="1000">
+  <label>Main goal</label>
+  <div class="chips" data-chips="goal"><button data-v="emergency">Emergency fund</button><button data-v="house">House, land or car</button><button data-v="education">Education</button><button data-v="retirement">Retirement</button><button data-v="wealth">Long-term wealth</button></div>
+  <label>If markets fell 20%, I would…</label>
+  <div class="chips" data-chips="risk"><button data-v="1">Sell at once</button><button data-v="2">Feel very uneasy</button><button data-v="3">Tolerate it</button><button data-v="4">Stay calm</button><button data-v="5">Buy more</button></div>
+  <label>Preference</label>
+  <div class="chips" data-chips="pref"><button data-v="none">None</button><button data-v="local">Kenya focus</button><button data-v="esg">ESG</button><button data-v="shariah">Shariah</button></div>
+  <label for="target">Savings target (KSh) <span class="hint">optional</span></label>
+  <input type="number" id="target" data-k="target" inputmode="numeric" placeholder="e.g. 2000000">
+</div>
+
+<div class="card">
+  <h2>Your portfolio</h2>
+  <span class="badge" id="badge"></span>
+  <div id="flags"></div>
+  <div class="lv">Fine-tune risk <b id="o-tilt"></b></div>
+  <input type="range" data-k="tilt" min="-2" max="2" step="0.5">
+  <div class="sub" style="margin:-8px 0 10px">Slide left for safer, right for bolder.</div>
+  <h3 style="margin-top:12px">Allocation <span class="hint">tap a slice</span></h3>
+  <div class="donutwrap"><div id="donut"></div><div class="leg" id="leg"></div></div>
+  <div class="box" id="detail"></div>
+
+  <h3>How your money could grow</h3>
+  <div class="chips" data-chips="mode"><button data-v="nom">Nominal</button><button data-v="real">Today’s money</button></div>
+  <div id="chart"></div>
+  <div class="box" id="readout"></div>
+  <div class="sub">Shaded band: cautious to optimistic. Solid: base case. Dashed blue: money market only. Dotted: what you put in. Drag across the chart to read any year.</div>
+  <div id="targetbox"></div>
+
+  <h3>Stress test</h3>
+  <div class="lv">If equities fall <b id="o-fall"></b></div>
+  <input type="range" data-k="fall" min="10" max="50" step="5">
+  <div class="box" id="stress"></div>
+
+  <p class="disc"><strong>Important:</strong> This is an automated illustration based only on what you entered. It is not regulated personal advice from a licensed adviser. Assumed yearly returns before fees and tax: cash 9%, bonds 12.5%, equities 15%, property 10%, inflation 5%. They are estimates, not promises, and real results can be much lower or negative in some years. Consider speaking to a CMA-licensed adviser before investing.</p>
+  <button class="btn p" id="copy">Copy summary</button>
+  <button class="btn s" onclick="window.print()">Print / save as PDF</button>
+</div>
+</div>
+<div id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=n=>'KSh '+Math.round(n).toLocaleString('en-KE');
+const kf=n=>n>=1e6?(n/1e6).toFixed(1)+'M':Math.round(n/1e3)+'K';
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const S={income:150000,age:30,horizon:10,goal:'wealth',risk:3,lump:50000,monthly:10000,pref:'none',tilt:0,mode:'nom',sel:'e',fall:30,target:0};
+const A={
+ c:{n:'Cash / money market',col:'#0ea5e9',ret:.09,p:'Regulated money market funds: daily access and low volatility.'},
+ b:{n:'Bonds & fixed income',col:'#6366f1',ret:.125,p:'Treasury bills and bonds, or bond and income unit trusts.'},
+ e:{n:'Equity funds',col:'#f59e0b',ret:.15,p:'Diversified equity unit trusts, NSE index exposure, or shares via a licensed broker.'},
+ r:{n:'REITs / property',col:'#10b981',ret:.10,p:'Listed REITs or property funds from regulated managers.'}
+};
+function score(){let s=S.risk*1.5,a=S.age,h=S.horizon;
+ if(a<32)s+=1.8;else if(a<45)s+=.8;else if(a>55)s-=1.2;
+ if(h>=15)s+=1.8;else if(h>=7)s+=1;else if(h<=3)s-=1.5;
+ if(S.goal==='retirement'||S.goal==='wealth')s+=1;
+ if(S.goal==='emergency')s-=2;
+ if(S.goal==='house'&&h<=5)s-=.8;
+ if(S.income>200000)s+=.4;
+ return s}
+function mix(){const s=clamp(score()+S.tilt,1.2,10),t=(s-1.2)/8.8;
+ const e=Math.round(10+t*55),c=Math.round(45-t*37),r=Math.round(5+t*10);
+ return {s,c,e,r,b:100-c-e-r}}
+const label=s=>s<=3.8?'Conservative':s<=6.2?'Balanced':s<=8.2?'Growth':'Aggressive';
+const ret=m=>['c','b','e','r'].reduce((a,k)=>a+m[k]/100*A[k].ret,0);
+function fv(p,m,r,n){return r?p*Math.pow(1+r,n)+m*12*((Math.pow(1+r,n)-1)/r):p+m*12*n}
+function yrsTo(T,rt){let v=S.lump;if(v>=T)return 0;for(let i=1;i<=720;i++){v=v*(1+rt/12)+S.monthly;if(v>=T)return i/12}return null}
+let C=null;
+
+function outs(){
+ $('o-age').textContent=S.age;
+ $('o-horizon').textContent=S.horizon+(S.horizon===1?' year':' years');
+ $('o-lump').textContent=fmt(S.lump);$('o-monthly').textContent=fmt(S.monthly);
+ $('o-fall').textContent=S.fall+'%';
+ $('o-tilt').textContent=S.tilt===0?'As recommended':(S.tilt<0?'Safer ':'Bolder ')+(S.tilt>0?'+':'')+S.tilt;
+ document.querySelectorAll('[data-chips]').forEach(g=>g.querySelectorAll('button').forEach(b=>b.classList.toggle('on',String(S[g.dataset.chips])===b.dataset.v)));
+}
+
+function render(){
+ outs();
+ const m=mix(),lab=label(m.s);
+ $('badge').textContent=lab+' profile';
+ const fl=[];
+ if(S.monthly>S.income*.6)fl.push('Your monthly addition is over 60% of your income. Check this is realistic after rent, food and transport.');
+ if(S.goal!=='emergency'&&S.lump<S.income*3)fl.push('Aim to hold 3 to 6 months of expenses in a money market fund before taking investment risk.');
+ if(S.horizon<=3&&m.e>20)fl.push('With a horizon of 3 years or less, equities can lose value before you need the money. Consider a lower equity share.');
+ if(S.age>=60&&m.e>40)fl.push('Check you could live with a large equity fall close to when you need the money.');
+ if(S.lump===0&&S.monthly===0)fl.push('Set an amount to invest now or monthly to see projections.');
+ $('flags').innerHTML=fl.map(f=>`<div class="note">${f}</div>`).join('');
+
+ let off=0,segs='';
+ ['c','b','e','r'].forEach(k=>{const p=m[k];
+  segs+=`<circle class="seg" data-a="${k}" cx="21" cy="21" r="15.915" fill="none" stroke="${A[k].col}" stroke-width="${S.sel===k?8:6}" stroke-dasharray="${p} ${100-p}" stroke-dashoffset="${-off}" transform="rotate(-90 21 21)"/>`;off+=p});
+ $('donut').innerHTML=`<svg viewBox="0 0 42 42">${segs}<text x="21" y="23" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor">${m[S.sel]}%</text></svg>`;
+ $('leg').innerHTML=['c','b','e','r'].map(k=>`<button data-a="${k}" class="${S.sel===k?'on':''}"><i style="background:${A[k].col}"></i>${A[k].n} ${m[k]}%</button>`).join('');
+ const a=A[S.sel],p=m[S.sel];
+ const extra=S.pref==='esg'?'<br>Favour funds with an explicit ESG mandate.':S.pref==='shariah'?'<br>Look for a Shariah-compliant version.':S.pref==='local'?'<br>Keep the focus on Kenya and East Africa, and watch single-market concentration.':'';
+ $('detail').innerHTML=`<strong>${a.n}: ${p}%</strong><br>${fmt(S.lump*p/100)} now · ${fmt(S.monthly*p/100)} a month<br>${a.p}${extra}<div class="sub">Assumed return about ${(a.ret*100).toFixed(1)}% a year.</div>`;
+
+ chart(m);
+
+ const lossPct=m.e/100*S.fall+m.r/100*S.fall*.8+m.b/100*S.fall*.15,base=S.lump||100000,tol=[0,5,10,15,22,30][S.risk];
+ $('stress').innerHTML=`If equities fell ${S.fall}%, this mix could drop roughly <strong>${lossPct.toFixed(1)}%</strong>: about <strong>${fmt(base*lossPct/100)}</strong> on ${S.lump?fmt(base):'KSh 100,000 invested'}.<br>`+(lossPct>tol?'That is more than the fall you said you could stomach. Try sliding the risk control towards safer.':'That sits within the comfort level you chose.');
+}
+
+function chart(m){
+ const N=S.horizon,r=ret(m),sp=.01+m.e/100*.08,adj=x=>S.mode==='real'?(1+x)/1.05-1:x;
+ const R={lo:adj(r-sp),base:adj(r),hi:adj(r+sp),cash:adj(.09),con:adj(0)};
+ const V=(k,n)=>fv(S.lump,S.monthly,R[k],n);
+ const W=320,H=180,pl=6,pr=6,pt=14,pb=20,mx=Math.max(V('hi',N),1);
+ const X=n=>pl+n/N*(W-pl-pr),Y=v=>H-pb-clamp(v/mx,0,1)*(H-pb-pt);
+ const line=k=>{let d='';for(let n=0;n<=N;n++)d+=(n?'L':'M')+X(n).toFixed(1)+' '+Y(V(k,n)).toFixed(1);return d};
+ let band=line('lo');for(let n=N;n>=0;n--)band+='L'+X(n).toFixed(1)+' '+Y(V('hi',n)).toFixed(1);band+='Z';
+ $('chart').innerHTML=`<svg id="cs" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:pan-y"><path d="${band}" style="fill:var(--primary2);opacity:.2"/><path d="${line('cash')}" fill="none" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="4 3"/><path d="${line('con')}" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="1.5 3"/><path d="${line('base')}" fill="none" stroke-width="2.5" style="stroke:var(--primary)"/><line id="cur" y1="${pt}" y2="${H-pb}" stroke="currentColor" opacity=".45"/><text x="${pl}" y="${H-5}" font-size="9" fill="currentColor" opacity=".6">Now</text><text x="${W-pr}" y="${H-5}" font-size="9" text-anchor="end" fill="currentColor" opacity=".6">${N} yr</text><text x="${pl}" y="9" font-size="9" fill="currentColor" opacity=".6">KSh ${kf(mx)}</text></svg>`;
+ C={N,X,V,R};
+ const svg=$('cs');
+ svg.addEventListener('pointermove',e=>{const b=svg.getBoundingClientRect(),x=(e.clientX-b.left)/b.width*W;cur(clamp(Math.round((x-pl)/(W-pl-pr)*N),0,N))});
+ cur(N);
+ const t=$('targetbox');
+ if(S.target>0){const y=yrsTo(S.target,R.base);
+  t.innerHTML=`<div class="box">Target ${fmt(S.target)}${S.mode==='real'?' (today’s money)':''}: `+(y===null?'not reached within 60 years at this saving rate.':y===0?'you are already there.':`reached in about <strong>${y.toFixed(1)} years</strong> in the base case, ${y<=S.horizon?'within':'after'} your ${S.horizon}-year horizon.`)+'</div>'}
+ else t.innerHTML='';
+}
+function cur(n){
+ const {X,V}=C,x=X(n).toFixed(1),l=$('cur');l.setAttribute('x1',x);l.setAttribute('x2',x);
+ $('readout').innerHTML=`<strong>Year ${n}:</strong> base <strong>${fmt(V('base',n))}</strong> · range ${fmt(V('lo',n))} to ${fmt(V('hi',n))}<br>Money market only ${fmt(V('cash',n))} · You put in ${fmt(V('con',n))}`;
+}
+
+document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.k;if(!k)return;S[k]=+e.target.value||0;render()});
+document.querySelectorAll('[data-chips]').forEach(g=>g.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=g.dataset.chips,v=b.dataset.v;S[k]=isNaN(v)?v:+v;render()}));
+['donut','leg'].forEach(id=>$(id).addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;S.sel=el.dataset.a;render()}));
+$('theme').onclick=()=>{const d=document.documentElement,dark=d.dataset.theme==='dark'||(!d.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);d.dataset.theme=dark?'light':'dark'};
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
+$('copy').onclick=async()=>{const m=mix(),txt=`PortfolioConsult KE: ${label(m.s)} profile\nCash ${m.c}%, bonds ${m.b}%, equities ${m.e}%, property ${m.r}%\nInvest now ${fmt(S.lump)}, then ${fmt(S.monthly)} a month for ${S.horizon} years\nBase case after ${S.horizon} years: ${fmt(C.V('base',S.horizon))}\nIllustration only, not regulated advice.`;
+ try{await navigator.clipboard.writeText(txt);toast('Summary copied')}catch(e){toast('Copy is not available here')}};
+document.querySelectorAll('[data-k]').forEach(el=>{el.value=el.type==='number'&&!S[el.dataset.k]?'':S[el.dataset.k]});
+render();
+</script>
+</body>
+</html>
